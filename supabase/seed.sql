@@ -1,0 +1,2 @@
+-- Seed data will be added in Phases 7–8.
+-- Do not fabricate employment history, metrics, or unpublished peer-reviewed claims.
