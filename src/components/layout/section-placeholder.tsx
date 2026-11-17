@@ -19,14 +19,15 @@ export function SectionPlaceholder({
   nextLabel = "Back to home",
 }: SectionPlaceholderProps) {
   return (
-    <div className="surface-grid">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-24 sm:px-6">
+    <div className="relative overflow-hidden surface-grid">
+      <div className="surface-mesh pointer-events-none absolute inset-0 opacity-50" />
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-4 py-28 sm:px-6">
         <PageHeader
           eyebrow={eyebrow}
           title={title}
           description={description}
         />
-        <p className="mt-8 rounded-full border border-border/70 bg-card/50 px-4 py-1.5 text-xs text-muted-foreground">
+        <p className="glass-panel mt-8 rounded-full px-4 py-1.5 text-xs text-muted-foreground">
           Content for this section will be expanded in upcoming phases.
         </p>
         <Link

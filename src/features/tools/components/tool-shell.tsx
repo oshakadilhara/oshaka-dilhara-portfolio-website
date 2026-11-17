@@ -31,7 +31,7 @@ export function ToolShell({
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">{tool.description}</p>
 
-        <div className="mt-10 rounded-2xl border border-border/70 bg-card/40 p-4 sm:p-6">
+        <div className="glass-panel mt-10 rounded-3xl p-4 sm:p-6">
           {children}
         </div>
 

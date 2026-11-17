@@ -14,12 +14,13 @@ export function ToolsDirectory() {
   const tools = useMemo(() => searchTools(query), [query]);
 
   return (
-    <div className="mt-10 space-y-10">
+    <div className="mt-10 space-y-12">
       <Input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search tools..."
         aria-label="Search tools"
+        className="h-11 rounded-xl border-border/60 bg-card/40 backdrop-blur-sm"
       />
 
       {toolCategories.map((category) => {
@@ -29,7 +30,7 @@ export function ToolsDirectory() {
           <section key={category.id}>
             <div className="flex items-end justify-between gap-3">
               <div>
-                <h2 className="text-xl font-semibold tracking-tight">
+                <h2 className="display-title text-xl sm:text-2xl">
                   {category.title}
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
@@ -43,12 +44,12 @@ export function ToolsDirectory() {
                 View category
               </Link>
             </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {items.map((tool) => (
                 <Link
                   key={tool.slug}
                   href={`/tools/${tool.slug}`}
-                  className="rounded-2xl border border-border/70 bg-card/40 p-5 transition-colors hover:border-primary/40"
+                  className="panel-hover glass-panel block rounded-2xl p-5"
                 >
                   <h3 className="font-medium tracking-tight">{tool.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">

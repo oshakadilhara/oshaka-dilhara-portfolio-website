@@ -16,7 +16,7 @@ export function MainNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+    <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Primary">
       {mainNav.map((item) => {
         const active =
           pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -25,10 +25,10 @@ export function MainNav() {
             key={item.href}
             href={item.href}
             className={cn(
-              "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+              "relative rounded-xl px-3 py-2 text-sm font-medium transition-colors",
               active
-                ? "text-primary"
-                : "text-muted-foreground hover:text-foreground"
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
             )}
           >
             {item.title}
@@ -36,11 +36,14 @@ export function MainNav() {
         );
       })}
       <DropdownMenu>
-        <DropdownMenuTrigger className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+        <DropdownMenuTrigger className="inline-flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground">
           More
           <ChevronDown className="size-3.5 opacity-70" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="min-w-44">
+        <DropdownMenuContent
+          align="end"
+          className="min-w-44 border-border/60 bg-popover/95 backdrop-blur-xl"
+        >
           {moreNav.map((item) => (
             <DropdownMenuItem
               key={item.href}
@@ -48,7 +51,7 @@ export function MainNav() {
             >
               <Link
                 href={item.href}
-                className="flex w-full rounded-md px-1.5 py-1 hover:bg-accent hover:text-accent-foreground"
+                className="flex w-full rounded-lg px-2 py-1.5 hover:bg-accent hover:text-accent-foreground"
               >
                 {item.title}
               </Link>

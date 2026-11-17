@@ -21,8 +21,9 @@ async function LoginContent({ searchParams }: PageProps) {
   const allowlistConfigured = getAdminEmails().length > 0;
 
   return (
-    <div className="mx-auto max-w-md rounded-2xl border border-border/70 bg-card/60 p-8">
-      <h1 className="text-2xl font-semibold tracking-tight">Admin login</h1>
+    <div className="glass-panel mx-auto max-w-md rounded-3xl p-8">
+      <p className="eyebrow mb-3">Secure access</p>
+      <h1 className="display-title text-2xl sm:text-3xl">Admin login</h1>
       <p className="mt-2 text-sm text-muted-foreground">
         Single-administrator access only. Public registration is disabled.
       </p>

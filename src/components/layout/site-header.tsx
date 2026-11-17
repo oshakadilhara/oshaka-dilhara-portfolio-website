@@ -13,15 +13,20 @@ function NavFallback() {
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <div className="flex items-center gap-6">
-          <Link href="/" className="group flex flex-col leading-none">
-            <span className="text-sm font-semibold tracking-[0.14em] text-foreground transition-colors group-hover:text-primary">
-              {siteConfig.brand}
+    <header className="sticky top-0 z-50 px-3 pt-3 sm:px-4">
+      <div className="glass-nav mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 rounded-2xl px-3 sm:h-16 sm:px-5">
+        <div className="flex items-center gap-5">
+          <Link href="/" className="group flex items-center gap-3 leading-none">
+            <span className="relative flex size-8 items-center justify-center rounded-xl bg-primary/15 ring-1 ring-primary/30">
+              <span className="size-2 rounded-full bg-primary shadow-[0_0_12px_var(--primary)]" />
             </span>
-            <span className="mt-0.5 hidden text-[10px] tracking-wide text-muted-foreground sm:block">
-              {siteConfig.tagline}
+            <span className="flex flex-col">
+              <span className="text-[13px] font-semibold tracking-[0.16em] text-foreground transition-colors group-hover:text-primary">
+                {siteConfig.brand}
+              </span>
+              <span className="mt-0.5 hidden text-[10px] tracking-[0.12em] text-muted-foreground sm:block">
+                {siteConfig.tagline}
+              </span>
             </span>
           </Link>
           <Suspense fallback={<NavFallback />}>
@@ -36,7 +41,7 @@ export function SiteHeader() {
             href="/contact"
             className={cn(
               buttonVariants({ size: "sm" }),
-              "hidden sm:inline-flex"
+              "btn-sheen hidden sm:inline-flex"
             )}
           >
             Get in touch

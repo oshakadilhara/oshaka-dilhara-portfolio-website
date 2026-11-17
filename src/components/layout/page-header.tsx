@@ -15,19 +15,16 @@ export function PageHeader({
 }: PageHeaderProps) {
   return (
     <header className={cn("mx-auto max-w-3xl text-center", className)}>
-      {eyebrow ? (
-        <p className="mb-3 text-xs font-semibold tracking-[0.2em] text-primary uppercase">
-          {eyebrow}
-        </p>
-      ) : null}
-      <h1 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+      {eyebrow ? <p className="eyebrow mb-4">{eyebrow}</p> : null}
+      <h1 className="display-title text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem]">
         {title}
       </h1>
       {description ? (
-        <p className="mt-4 text-pretty text-base text-muted-foreground sm:text-lg">
+        <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
           {description}
         </p>
       ) : null}
+      <div className="mx-auto mt-8 h-px w-24 bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
     </header>
   );
 }

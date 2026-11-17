@@ -3,16 +3,22 @@ import { footerNav, siteConfig } from "@/lib/constants/site";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-border/60 bg-card/40">
-      <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-5">
+    <footer className="relative mt-auto overflow-hidden border-t border-border/50">
+      <div className="pointer-events-none absolute inset-0 surface-grid opacity-60" />
+      <div className="relative mx-auto grid w-full max-w-6xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 lg:grid-cols-5">
         <div className="lg:col-span-2">
-          <p className="text-sm font-semibold tracking-[0.14em]">
-            {siteConfig.brand}
-          </p>
-          <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+          <div className="flex items-center gap-3">
+            <span className="flex size-8 items-center justify-center rounded-xl bg-primary/15 ring-1 ring-primary/30">
+              <span className="size-2 rounded-full bg-primary shadow-[0_0_12px_var(--primary)]" />
+            </span>
+            <p className="text-sm font-semibold tracking-[0.14em]">
+              {siteConfig.brand}
+            </p>
+          </div>
+          <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
             {siteConfig.tagline}
           </p>
-          <p className="mt-3 text-sm text-muted-foreground">
+          <p className="mt-2 text-sm text-muted-foreground">
             {siteConfig.philosophy}
           </p>
         </div>
@@ -24,10 +30,10 @@ export function SiteFooter() {
           ] as const
         ).map(([label, items]) => (
           <div key={label}>
-            <p className="text-xs font-semibold tracking-wider text-foreground uppercase">
+            <p className="text-[11px] font-semibold tracking-[0.18em] text-foreground uppercase">
               {label}
             </p>
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-4 space-y-2.5">
               {items.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -42,11 +48,9 @@ export function SiteFooter() {
           </div>
         ))}
       </div>
-      <div className="border-t border-border/60">
+      <div className="relative border-t border-border/50">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <p>
-            © {siteConfig.name}. All rights reserved.
-          </p>
+          <p>© {siteConfig.name}. All rights reserved.</p>
           <div className="flex gap-4">
             {footerNav.legal.map((item) => (
               <Link
