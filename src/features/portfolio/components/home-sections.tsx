@@ -55,9 +55,11 @@ function SectionHeading({
   );
 }
 
-export function HomeSections() {
-  const profile = getProfile();
-  const featuredProjects = getFeaturedProjects();
+export async function HomeSections() {
+  const [profile, featuredProjects] = await Promise.all([
+    getProfile(),
+    getFeaturedProjects(),
+  ]);
   const skills = getSkills();
   const articles = getFeaturedArticles(3);
   const popularTools = getImplementedTools().slice(0, 6);

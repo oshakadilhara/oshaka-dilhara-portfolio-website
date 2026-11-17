@@ -17,6 +17,7 @@ import {
   pearson,
   stdDev,
 } from "@/features/tools/lib/csv";
+import { safeMarkdownPreview } from "@/lib/security/sanitize";
 
 export function TextSorterTool() {
   const [text, setText] = useState("banana\napple\ncarrot");
@@ -79,15 +80,7 @@ export function ReadabilityCheckerTool() {
 
 export function MarkdownEditorTool() {
   const [md, setMd] = useState("# Hello\n\n**Bold** and `code`.");
-  const html = useMemo(() => {
-    return md
-      .replace(/^### (.*$)/gim, "<h3>$1</h3>")
-      .replace(/^## (.*$)/gim, "<h2>$1</h2>")
-      .replace(/^# (.*$)/gim, "<h1>$1</h1>")
-      .replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>")
-      .replace(/`(.*?)`/gim, "<code>$1</code>")
-      .replace(/\n/g, "<br/>");
-  }, [md]);
+  const html = useMemo(() => safeMarkdownPreview(md), [md]);
   return (
     <Panel>
       <div className="grid gap-4 md:grid-cols-2">

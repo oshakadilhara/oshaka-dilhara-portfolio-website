@@ -1,6 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { CodeBlock } from "@/features/blog/components/code-block";
+import { sanitizeHref } from "@/lib/security/sanitize";
 
 export function MarkdownContent({ content }: { content: string }) {
   return (
@@ -38,14 +39,24 @@ export function MarkdownContent({ content }: { content: string }) {
               {children}
             </ol>
           ),
-          a: ({ href, children }) => (
-            <a
-              href={href}
-              className="text-primary underline-offset-4 hover:underline"
-            >
-              {children}
-            </a>
-          ),
+          a: ({ href, children }) => {
+            const safe = sanitizeHref(href);
+            if (!safe) {
+              return <span>{children}</span>;
+            }
+            const external = /^https?:\/\//i.test(safe);
+            return (
+              <a
+                href={safe}
+                className="text-primary underline-offset-4 hover:underline"
+                {...(external
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
+                {children}
+              </a>
+            );
+          },
           code: ({ className, children, ...props }) => {
             const text = String(children).replace(/\n$/, "");
             const isBlock = Boolean(className) || text.includes("\n");

@@ -1,4 +1,5 @@
 ﻿import Link from "next/link";
+import { Suspense } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { ProjectCard } from "@/features/portfolio/components/project-card";
@@ -40,9 +41,18 @@ const links = [
   },
 ] as const;
 
-export default function PortfolioPage() {
-  const featured = getFeaturedProjects();
+async function FeaturedProjects() {
+  const featured = await getFeaturedProjects();
+  return (
+    <div className="mt-6 grid gap-4 md:grid-cols-2">
+      {featured.map((project) => (
+        <ProjectCard key={project.id} project={project} />
+      ))}
+    </div>
+  );
+}
 
+export default function PortfolioPage() {
   return (
     <div className="surface-grid">
       <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6">
@@ -76,11 +86,15 @@ export default function PortfolioPage() {
           <h2 className="text-2xl font-semibold tracking-tight">
             Featured projects
           </h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {featured.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
+          <Suspense
+            fallback={
+              <p className="mt-6 text-sm text-muted-foreground">
+                Loading projects...
+              </p>
+            }
+          >
+            <FeaturedProjects />
+          </Suspense>
         </div>
       </div>
     </div>

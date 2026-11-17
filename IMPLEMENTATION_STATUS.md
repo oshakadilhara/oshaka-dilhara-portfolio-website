@@ -15,9 +15,9 @@
 | 4 | First 20 functional free tools | Complete |
 | 5 | AI playground / labs | Pending |
 | 6 | Learning, research, architecture | Pending |
-| 7 | Supabase schema + migrations | Pending |
-| 8 | Admin auth + RLS | In progress (login + allowlist + proxy live) |
-| 9 | Admin dashboard | Pending |
+| 7 | Supabase schema + migrations | Complete (security baseline migration) |
+| 8 | Admin auth + RLS | Complete (auth + RLS SQL + headers + contact hardening) |
+| 9 | Admin dashboard | Complete |
 | 10 | Testing, SEO, performance | Pending (foundation exists) |
 | 11 | Vercel production deployment | Pending (docs drafted) |
 
@@ -77,6 +77,27 @@ Word Counter, Character Counter, Text Case Converter, Slug Generator, Text Diff,
 - Blog currently uses local Markdown; Supabase publishing arrives in Phases 7–9.
 - Client navigation hooks are wrapped in `<Suspense>` for Cache Components compatibility.
 
+## Security baseline (Phases 7–8)
+
+- [x] Fail-closed admin proxy when Supabase env missing
+- [x] `RequireAdmin` layout for all `/admin/*` except login
+- [x] Login + contact rate limits, contact honeypot + Zod
+- [x] Security headers + CSP via `next.config` and proxy
+- [x] SQL migration with RLS, `admin_users`, audit log, storage policies
+- [x] `docs/SECURITY.md` + security unit/e2e tests
+- [x] Markdown link sanitization + safe local MD preview
+
+## Phase 9 checklist
+
+- [x] Messages + feedback inboxes (status update / delete)
+- [x] Articles, projects, categories CRUD
+- [x] Content hubs CRUD (resources, research, architecture, learning)
+- [x] Tools metadata overlays (featured / published / notes)
+- [x] Settings: site profile + experience / education / certifications
+- [x] Analytics events + dashboard counts
+- [x] Phase 9 SQL migration for extended CMS tables
+- [x] Public pages prefer published Supabase content when available
+
 ## Next
 
-Phase 5: build interactive AI labs (prompt engineering, RAG visualizer, vector search, multi-agent, ML playground) with local demos and no external API dependency by default.
+Apply both SQL migrations and seed `admin_users` in the live Supabase project. Then Phase 10: testing, SEO, and performance hardening.

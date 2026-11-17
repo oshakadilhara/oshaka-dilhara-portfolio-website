@@ -46,7 +46,30 @@ Use the allowlisted email and password.
 
 Unauthorized authenticated users are rejected server-side and signed out.
 
-## 5. Production
+## 5. Apply RLS + admin_users
+
+1. Run these migrations in the Supabase SQL editor (in order):
+   - `supabase/migrations/20261117120000_security_baseline.sql`
+   - `supabase/migrations/20261117150000_admin_cms.sql`
+2. Insert the Auth user into `public.admin_users` (see migration footer / `supabase/seed.sql`).
+3. App allowlisting (`ADMIN_EMAILS`) and DB `is_admin()` must both recognize the owner.
+
+Without step 2, public contact inserts still work, but admin CMS/inbox reads via RLS will fail.
+
+## 5b. Admin CMS surfaces
+
+After migrations + `admin_users` seeding, sign in at `/admin/login` and use:
+
+- Dashboard counts
+- Articles / projects CRUD
+- Tools metadata overlays
+- Resources / research / architecture / learning entries
+- Categories
+- Messages + feedback inboxes
+- Analytics events
+- Settings (site profile, experience, education, certifications)
+
+## 6. Production
 
 Add the same variables in Vercel:
 

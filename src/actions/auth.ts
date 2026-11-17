@@ -3,6 +3,10 @@
 import { redirect } from "next/navigation";
 import { isAdminEmail } from "@/lib/auth/admin";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit } from "@/lib/security/rate-limit";
+import { getRequestIp } from "@/lib/security/request";
+import { safeAdminNextPath } from "@/lib/security/safe-redirect";
+import { writeAuditLog } from "@/lib/security/audit";
 import { adminLoginSchema } from "@/lib/validations/auth";
 
 export type AuthActionState = {
@@ -14,6 +18,14 @@ export async function loginAdmin(
   _prevState: AuthActionState,
   formData: FormData
 ): Promise<AuthActionState> {
+  const ip = await getRequestIp();
+  const limited = rateLimit(`login:${ip}`, 8, 15 * 60 * 1000);
+  if (!limited.success) {
+    return {
+      error: "Too many login attempts. Please wait and try again.",
+    };
+  }
+
   const parsed = adminLoginSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -52,17 +64,28 @@ export async function loginAdmin(
     };
   }
 
-  const nextPath = String(formData.get("next") || "/admin/dashboard");
-  const safeNext =
-    nextPath.startsWith("/admin") && !nextPath.startsWith("/admin/login")
-      ? nextPath
-      : "/admin/dashboard";
+  await writeAuditLog({
+    action: "admin.login",
+    actorEmail: data.user.email,
+    actorUserId: data.user.id,
+    metadata: { ip },
+  });
 
-  redirect(safeNext);
+  redirect(safeAdminNextPath(formData.get("next")));
 }
 
 export async function logoutAdmin() {
   const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  await writeAuditLog({
+    action: "admin.logout",
+    actorEmail: user?.email,
+    actorUserId: user?.id,
+  });
+
   await supabase.auth.signOut();
   redirect("/admin/login");
 }
