@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { requireAdminUser } from "@/lib/auth/session";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -9,7 +10,9 @@ export const metadata = buildMetadata({
   noIndex: true,
 });
 
-export default async function AdminDashboardPage() {
+export const instant = false;
+
+async function DashboardContent() {
   const admin = await requireAdminUser();
   if (!admin) {
     redirect("/admin/login");
@@ -44,5 +47,17 @@ export default async function AdminDashboardPage() {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function AdminDashboardPage() {
+  return (
+    <Suspense
+      fallback={
+        <p className="text-sm text-muted-foreground">Loading dashboard...</p>
+      }
+    >
+      <DashboardContent />
+    </Suspense>
   );
 }

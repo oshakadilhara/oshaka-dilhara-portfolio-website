@@ -10,6 +10,8 @@ export const metadata = buildMetadata({
   noIndex: true,
 });
 
+export const instant = false;
+
 type PageProps = {
   searchParams: Promise<{ next?: string }>;
 };

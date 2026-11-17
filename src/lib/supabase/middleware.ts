@@ -18,9 +18,19 @@ export async function updateSession(request: NextRequest) {
     request,
   });
 
+  let url: string;
+  let key: string;
+  try {
+    url = getSupabaseUrl();
+    key = getSupabasePublishableKey();
+  } catch {
+    // Allow public pages to render when Supabase env is not configured yet.
+    return supabaseResponse;
+  }
+
   const supabase = createServerClient(
-    getSupabaseUrl(),
-    getSupabasePublishableKey(),
+    url,
+    key,
     {
       cookies: {
         getAll() {
